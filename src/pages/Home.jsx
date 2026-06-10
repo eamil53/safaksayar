@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Shield, BookOpen, PenTool, LayoutGrid, Palette, ArrowRight, Award, Zap } from 'lucide-react';
+import { useState } from 'react';
+import { BookOpen, PenTool, Palette, Award, Zap } from 'lucide-react';
 import CountdownCalc from '../components/CountdownCalc';
 
 export default function Home() {
@@ -60,20 +60,16 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Interactive Phone Mockup */}
+          {/* Interactive Screenshot Showcase */}
           <div className="hero-mockup animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div className="mockup-glow"></div>
-            <div className="phone-wrapper">
-              <div className="phone-notch"></div>
-              <div className="phone-reflection"></div>
-              <div className="phone-screen">
-                <img 
-                  src={activeScreenshot.src} 
-                  alt={activeScreenshot.name} 
-                  className="phone-screenshot" 
-                  key={activeScreenshot.src} /* Key forces remount/animation */
-                />
-              </div>
+            <div className="screenshot-container">
+              <img 
+                src={activeScreenshot.src} 
+                alt={activeScreenshot.name} 
+                className="app-screenshot" 
+                key={activeScreenshot.src} /* Key forces remount/animation */
+              />
             </div>
           </div>
         </div>

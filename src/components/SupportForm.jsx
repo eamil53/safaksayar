@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Mail, MessageSquare, Send, CheckCircle2, User } from 'lucide-react';
+import { useState } from 'react';
+import { Send, CheckCircle2 } from 'lucide-react';
 
 export default function SupportForm() {
   const [formData, setFormData] = useState({
@@ -21,17 +21,42 @@ export default function SupportForm() {
 
     setIsSubmitting(true);
 
-    // Simulate sending message to support API
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        subject: 'feedback',
-        message: ''
+    fetch("https://formsubmit.co/ajax/bayesatechnology@gmail.com", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        Ad_Soyad: formData.name,
+        Eposta: formData.email,
+        Konu: formData.subject === 'feedback' ? 'Genel Öneri / Geri Bildirim' :
+              formData.subject === 'bug' ? 'Hata Bildirimi' :
+              formData.subject === 'feature' ? 'Yeni Özellik Talebi' : 'Diğer',
+        Mesaj: formData.message
+      })
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Form gönderme hatası");
+        }
+        return res.json();
+      })
+      .then(() => {
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        setFormData({
+          name: '',
+          email: '',
+          subject: 'feedback',
+          message: ''
+        });
+      })
+      .catch((err) => {
+        setIsSubmitting(false);
+        alert("Mesajınız gönderilirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz veya doğrudan bayesatechnology@gmail.com adresine e-posta gönderiniz.");
+        console.error(err);
       });
-    }, 1500);
   };
 
   return (
